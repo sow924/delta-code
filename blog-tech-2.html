@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DevLog — Blog &amp; Cours PDF</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#F7F6F2;--sur:#FFF;--ink:#0A0A0A;--soft:#6B6B6B;--acc:#1A6BFF;--grn:#15803D;--brd:#E4E4DF;--tg:#EEEDE8;--mn:'DM Mono',monospace;--ds:'Syne',sans-serif;--bd:'DM Sans',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--bd);font-size:16px;line-height:1.7}
+nav{position:sticky;top:0;z-index:200;background:rgba(247,246,242,.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--brd);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:var(--ds);font-weight:800;font-size:1.25rem;color:var(--ink);text-decoration:none;letter-spacing:-.03em}.logo span{color:var(--acc)}
+.tabs{display:flex;gap:.3rem}
+.tab{font-family:var(--mn);font-size:.75rem;padding:.42rem 1.1rem;border-radius:8px;border:none;background:transparent;cursor:pointer;color:var(--soft);transition:all .2s}
+.tab.on{background:var(--ink);color:#fff}.tab:hover:not(.on){background:var(--tg);color:var(--ink)}
+.pg{display:none}.pg.show{display:block;animation:up .45s ease both}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.wrap{max-width:900px;margin:0 auto;padding:0 2.5rem}
+.hero{padding:5rem 0 3rem}
+.ey{font-family:var(--mn);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem}
+.ey::before{content:'';width:22px;height:2px;background:currentColor}
+.ey.bl{color:var(--acc)}.ey.gr{color:var(--grn)}
+.hero h1{font-family:var(--ds);font-weight:800;font-size:clamp(2.1rem,5.5vw,3.3rem);line-height:1.06;letter-spacing:-.045em}
+.hero h1 em{font-style:normal}.hero h1 em.b{color:var(--acc)}.hero h1 em.g{color:var(--grn)}
+.hs{margin-top:1.2rem;color:var(--soft);max-width:500px;font-size:1.05rem;font-weight:300;line-height:1.7}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;padding:2rem 0 2.5rem}
+.f{font-family:var(--mn);font-size:.72rem;padding:.32rem .85rem;border:1.5px solid var(--brd);border-radius:100px;background:transparent;cursor:pointer;color:var(--soft);transition:all .18s}
+.f:hover,.f.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.feat{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--brd);border-radius:20px;overflow:hidden;background:var(--sur);margin-bottom:3rem;transition:box-shadow .25s,transform .25s;cursor:pointer}
+.feat:hover{box-shadow:0 20px 60px rgba(0,0,0,.09);transform:translateY(-3px)}
+.fv{background:linear-gradient(135deg,#0A0F1E,#0D1B40);min-height:260px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.fv::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 49px,rgba(26,107,255,.06) 49px,rgba(26,107,255,.06) 50px),repeating-linear-gradient(0deg,transparent,transparent 49px,rgba(26,107,255,.06) 49px,rgba(26,107,255,.06) 50px)}
+.cprev{font-family:var(--mn);font-size:.76rem;color:#58A6FF;line-height:1.9;z-index:1;padding:2rem}
+.kw{color:#FF7B72}.st{color:#A5D6FF}.fn{color:#D2A8FF}.cm{color:#3D4451}
+.fb{padding:2.5rem;display:flex;flex-direction:column;justify-content:center;gap:.65rem}
+.pill{display:inline-flex;align-items:center;font-family:var(--mn);font-size:.68rem;padding:.28rem .7rem;border-radius:100px;width:fit-content;background:#EEF3FF;color:var(--acc)}
+.fb h2{font-family:var(--ds);font-weight:800;font-size:1.45rem;line-height:1.2;letter-spacing:-.035em}
+.fb p{color:var(--soft);font-size:.93rem;line-height:1.65}
+.fm{font-family:var(--mn);font-size:.7rem;color:var(--soft)}
+.rm{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mn);font-size:.76rem;color:var(--acc);background:none;border:none;cursor:pointer;padding:0;transition:gap .2s;margin-top:.4rem}
+.rm:hover{gap:.9rem}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.sh h3{font-family:var(--ds);font-weight:800;font-size:1.1rem;letter-spacing:-.025em}
+.sh span{font-family:var(--mn);font-size:.7rem;color:var(--soft)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;padding-bottom:5rem}
+.card{background:var(--sur);border:1.5px solid var(--brd);border-radius:16px;padding:1.5rem;display:flex;flex-direction:column;gap:.75rem;transition:box-shadow .22s,transform .22s;cursor:pointer}
+.card:hover{box-shadow:0 10px 32px rgba(0,0,0,.08);transform:translateY(-3px)}
+.ct{display:flex;gap:.35rem;flex-wrap:wrap}
+.tg{font-family:var(--mn);font-size:.65rem;background:var(--tg);color:var(--soft);padding:.18rem .55rem;border-radius:5px}
+.card h4{font-family:var(--ds);font-weight:800;font-size:.97rem;line-height:1.3;letter-spacing:-.025em}
+.card p{font-size:.85rem;color:var(--soft);flex:1;line-height:1.6}
+.cf{display:flex;align-items:center;justify-content:space-between;font-family:var(--mn);font-size:.68rem;color:var(--soft);padding-top:.85rem;border-top:1px solid var(--brd)}
+/* ARTICLE */
+.back-btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mn);font-size:.76rem;color:var(--soft);background:none;border:none;cursor:pointer;padding:1.8rem 0 0;transition:color .18s}
+.back-btn:hover{color:var(--ink)}
+.artc{max-width:720px;margin:0 auto;padding:2rem 2.5rem 7rem}
+.art-ey{font-family:var(--mn);font-size:.72rem;color:var(--acc);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.art-ey::before{content:'';width:20px;height:2px;background:var(--acc)}
+.art-tt{font-family:var(--ds);font-weight:800;font-size:clamp(1.9rem,4vw,2.7rem);line-height:1.08;letter-spacing:-.04em;margin-bottom:1.3rem}
+.art-mt{font-family:var(--mn);font-size:.71rem;color:var(--soft);display:flex;flex-wrap:wrap;gap:1.2rem;padding-bottom:2rem;border-bottom:1.5px solid var(--brd);margin-bottom:2.5rem}
+.art-in{font-size:1.08rem;color:var(--soft);font-weight:300;line-height:1.8;margin-bottom:2.5rem;font-style:italic}
+.artb h2{font-family:var(--ds);font-weight:800;font-size:1.35rem;letter-spacing:-.03em;margin:2.8rem 0 1rem;padding-top:.8rem;border-top:1px solid var(--brd)}
+.artb h3{font-family:var(--ds);font-weight:700;font-size:1.05rem;margin:1.8rem 0 .7rem}
+.artb p{margin-bottom:1.3rem;color:#252525;line-height:1.8}
+.artb ul,.artb ol{margin:0 0 1.3rem 1.6rem}
+.artb li{margin-bottom:.5rem;color:#252525;line-height:1.7}
+.artb strong{color:var(--ink);font-weight:600}
+.cb{background:#0A0F1E;border-radius:14px;padding:1.5rem;margin:1.6rem 0;overflow-x:auto;border:1px solid #1e2a4a}
+.cb pre{font-family:var(--mn);font-size:.8rem;color:#CDD9E5;line-height:1.9;margin:0}
+.tip{background:linear-gradient(135deg,#EEF3FF,#F5F8FF);border-left:3px solid var(--acc);border-radius:0 12px 12px 0;padding:1.1rem 1.4rem;margin:1.8rem 0;font-size:.93rem;color:#1a2a4a}
+.tip strong{font-family:var(--mn);font-size:.7rem;color:var(--acc);display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.1em}
+.warn{background:#FFF7ED;border-left:3px solid #F97316;border-radius:0 12px 12px 0;padding:1.1rem 1.4rem;margin:1.8rem 0;font-size:.93rem}
+.warn strong{font-family:var(--mn);font-size:.7rem;color:#F97316;display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.1em}
+.sbox{background:var(--sur);border:1.5px solid var(--brd);border-radius:16px;padding:1.8rem;margin:2.5rem 0}
+.sbox h4{font-family:var(--ds);font-weight:800;font-size:1.05rem;letter-spacing:-.02em;margin-bottom:1rem}
+/* SHOP */
+.cbar{display:flex;gap:.7rem;flex-wrap:wrap;padding-bottom:2.5rem}
+.chip{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mn);font-size:.74rem;padding:.5rem 1.1rem;border-radius:100px;text-decoration:none;border:1.5px solid var(--brd);color:var(--ink);background:var(--sur);transition:all .2s}
+.chip:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip.wa{border-color:#25D366;color:#25D366}.chip.wa:hover{background:#25D366;color:#fff}
+.chip.em{border-color:var(--acc);color:var(--acc)}.chip.em:hover{background:var(--acc);color:#fff}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;padding-bottom:5rem}
+.pcard{background:var(--sur);border:1.5px solid var(--brd);border-radius:16px;overflow:hidden;transition:box-shadow .22s,transform .22s}
+.pcard:hover{box-shadow:0 12px 36px rgba(0,0,0,.1);transform:translateY(-3px)}
+.pcov{height:130px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;position:relative}
+.pcov::after{content:'PDF';font-family:var(--mn);font-size:.58rem;color:rgba(255,255,255,.75);position:absolute;top:10px;right:10px;background:rgba(0,0,0,.28);padding:.2rem .45rem;border-radius:4px}
+.c1{background:linear-gradient(135deg,#1e3a5f,#1A6BFF)}.c2{background:linear-gradient(135deg,#1a2e1a,#15803D)}.c3{background:linear-gradient(135deg,#3b1f5e,#A855F7)}.c4{background:linear-gradient(135deg,#5f2d1e,#F97316)}.c5{background:linear-gradient(135deg,#1f3a3a,#0891B2)}.c6{background:linear-gradient(135deg,#3a1a2d,#E11D48)}
+.pb{padding:1.2rem 1.3rem 1.4rem}
+.pb h4{font-family:var(--ds);font-weight:800;font-size:.95rem;letter-spacing:-.02em;margin-bottom:.4rem;line-height:1.3}
+.pb p{font-size:.82rem;color:var(--soft);line-height:1.55;margin-bottom:1rem}
+.pf{display:flex;align-items:center;justify-content:space-between}
+.pr{font-family:var(--ds);font-weight:800;font-size:1.1rem;color:var(--grn)}
+.pr small{font-family:var(--mn);font-weight:400;font-size:.62rem;color:var(--soft);display:block}
+.buy{font-family:var(--mn);font-size:.71rem;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.45rem .9rem;cursor:pointer;transition:background .18s}
+.buy:hover{background:var(--acc)}
+/* MODAL */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;align-items:center;justify-content:center}
+.ov.open{display:flex}
+.modal{background:var(--sur);border-radius:20px;padding:2.5rem;max-width:410px;width:92%;animation:up .3s ease;box-shadow:0 24px 80px rgba(0,0,0,.18)}
+.modal h3{font-family:var(--ds);font-weight:800;font-size:1.3rem;letter-spacing:-.03em;margin-bottom:.4rem}
+.mdesc{color:var(--soft);font-size:.9rem;margin-bottom:1.8rem}
+.mbtns{display:flex;flex-direction:column;gap:.65rem}
+.mbtn{display:flex;align-items:center;gap:.7rem;padding:.9rem 1.2rem;border-radius:12px;border:1.5px solid var(--brd);font-family:var(--mn);font-size:.8rem;text-decoration:none;color:var(--ink);background:var(--sur);transition:all .18s}
+.mbtn:hover{background:var(--tg)}
+.mbtn.wa{border-color:#25D366;color:#25D366}.mbtn.wa:hover{background:#25D366;color:#fff}
+.mbtn.em{border-color:var(--acc);color:var(--acc)}.mbtn.em:hover{background:var(--acc);color:#fff}
+.mcl{margin-top:.9rem;width:100%;font-family:var(--mn);font-size:.73rem;background:transparent;border:none;color:var(--soft);cursor:pointer;padding:.45rem}
+/* NEWSLETTER */
+.nl{margin-bottom:5rem}
+.nli{background:var(--ink);border-radius:20px;padding:3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}
+.nlt h3{font-family:var(--ds);font-weight:800;font-size:1.4rem;color:#fff;letter-spacing:-.035em;margin-bottom:.4rem}
+.nlt p{color:rgba(255,255,255,.4);font-size:.9rem}
+.nlf{display:flex;gap:.5rem;flex-shrink:0}
+.nlf input{font-family:var(--mn);font-size:.78rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:.65rem 1rem;color:#fff;outline:none;width:210px}
+.nlf input::placeholder{color:rgba(255,255,255,.28)}.nlf input:focus{border-color:var(--acc)}
+.nlf button{font-family:var(--mn);font-size:.75rem;background:var(--acc);color:#fff;border:none;border-radius:10px;padding:.65rem 1.1rem;cursor:pointer;white-space:nowrap}.nlf button:hover{background:#0055D4}
+footer{border-top:1px solid var(--brd);padding:2rem 2.5rem;text-align:center;font-family:var(--mn);font-size:.69rem;color:var(--soft)}
+footer a{color:inherit}
+@media(max-width:700px){.feat{grid-template-columns:1fr}.fv{min-height:180px}.grid,.sgrid{grid-template-columns:1fr}.nli{flex-direction:column}.nlf{flex-direction:column;width:100%}.nlf input{width:100%}nav{padding:0 1.2rem}.wrap{padding:0 1.2rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#" onclick="showBlog()">Dev<span>Log</span></a>
+  <div class="tabs">
+    <button class="tab on" id="tb" onclick="goPage('blog')">📝 Blog</button>
+    <button class="tab" id="ts" onclick="goPage('shop')">📚 Cours PDF</button>
+  </div>
+</nav>
+
+<!-- ═══ BLOG ═══ -->
+<div id="pblog" class="pg show">
+<div class="wrap">
+  <div class="hero">
+    <div class="ey bl">Le blog des développeurs</div>
+    <h1>Des articles <em class="b">tech</em> qui vont droit au but.</h1>
+    <p class="hs">Tutoriels clairs, bonnes pratiques et veille pour les devs qui veulent vraiment progresser.</p>
+  </div>
+  <div class="filters">
+    <button class="f on" onclick="fil('all',this)">Tout</button>
+    <button class="f" onclick="fil('js',this)">JavaScript</button>
+    <button class="f" onclick="fil('py',this)">Python</button>
+    <button class="f" onclick="fil('do',this)">DevOps</button>
+    <button class="f" onclick="fil('cs',this)">CSS</button>
+    <button class="f" onclick="fil('gt',this)">Git</button>
+  </div>
+  <div class="feat" onclick="openArt(0)">
+    <div class="fv">
+      <div class="cprev">
+        <div><span class="cm">// async/await</span></div>
+        <div><span class="kw">const</span> <span class="fn">getData</span> = <span class="kw">async</span> () =&gt; {</div>
+        <div>&nbsp;&nbsp;<span class="kw">try</span> {</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">const</span> r = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="st">'/api'</span>);</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> r.<span class="fn">json</span>();</div>
+        <div>&nbsp;&nbsp;} <span class="kw">catch</span>(e) { console.<span class="fn">error</span>(e) }</div>
+        <div>}</div>
+      </div>
+    </div>
+    <div class="fb">
+      <span class="pill">★ Article vedette</span>
+      <h2>Maîtriser async/await en JavaScript</h2>
+      <p>Promises, async/await, try/catch et Promise.all() — tout ce qu'il faut savoir avec des exemples concrets.</p>
+      <div class="fm">DevLog · 12 mars 2025 · 8 min</div>
+      <button class="rm">Lire l'article →</button>
+    </div>
+  </div>
+  <div class="sh"><h3>Articles récents</h3><span id="cnt">6 articles</span></div>
+  <div class="grid" id="cg">
+    <div class="card" data-c="py" onclick="openArt(1)"><div class="ct"><span class="tg">Python</span><span class="tg">IA</span></div><h4>Créer un chatbot avec LangChain et GPT-4</h4><p>Guide complet pour construire un assistant IA intelligent en moins d'une heure.</p><div class="cf"><span>⏱ 8 min</span><span>28 mars</span></div></div>
+    <div class="card" data-c="do" onclick="openArt(2)"><div class="ct"><span class="tg">DevOps</span><span class="tg">Docker</span></div><h4>Docker Compose pour les devs solo</h4><p>Orchestrez tous vos services locaux en un seul fichier YAML propre.</p><div class="cf"><span>⏱ 6 min</span><span>21 mars</span></div></div>
+    <div class="card" data-c="cs" onclick="openArt(3)"><div class="ct"><span class="tg">CSS</span><span class="tg">Design</span></div><h4>CSS Grid vs Flexbox : choisir le bon outil</h4><p>Comparaison pratique pour ne plus jamais hésiter entre les deux.</p><div class="cf"><span>⏱ 5 min</span><span>15 mars</span></div></div>
+    <div class="card" data-c="ar" onclick="openArt(4)"><div class="ct"><span class="tg">Architecture</span></div><h4>Clean Architecture expliquée simplement</h4><p>Pourquoi séparer les couches change radicalement la maintenabilité.</p><div class="cf"><span>⏱ 10 min</span><span>9 mars</span></div></div>
+    <div class="card" data-c="js" onclick="openArt(5)"><div class="ct"><span class="tg">JavaScript</span><span class="tg">React</span></div><h4>Optimiser React avec le code splitting</h4><p>Réduire le bundle initial avec React.lazy, Suspense et Vite.</p><div class="cf"><span>⏱ 7 min</span><span>2 mars</span></div></div>
+    <div class="card" data-c="gt" onclick="openArt(6)"><div class="ct"><span class="tg">Git</span><span class="tg">Workflow</span></div><h4>Git Flow vs Trunk-based : lequel choisir ?</h4><p>Deux philosophies de branching comparées selon votre équipe.</p><div class="cf"><span>⏱ 6 min</span><span>24 fév.</span></div></div>
+  </div>
+  <div class="nl"><div class="nli">
+    <div class="nlt"><h3>Reste à jour 📬</h3><p>Un article utile chaque semaine dans ta boîte mail.</p></div>
+    <div class="nlf"><input type="email" placeholder="ton@email.com"/><button>S'abonner</button></div>
+  </div></div>
+</div>
+</div>
+
+<!-- ═══ ARTICLE VIEW ═══ -->
+<div id="av" style="display:none">
+  <div class="wrap"><button class="back-btn" onclick="showBlog()">← Retour aux articles</button></div>
+  <div class="artc"><div id="ab"></div></div>
+</div>
+
+<!-- ═══ BOUTIQUE ═══ -->
+<div id="pshop" class="pg">
+<div class="wrap">
+  <div class="hero">
+    <div class="ey gr">Cours &amp; Ressources</div>
+    <h1>Des <em class="g">cours complets</em> pour maîtriser le code.</h1>
+    <p class="hs">Des PDF clairs et structurés. Contactez-nous pour recevoir votre cours après paiement.</p>
+  </div>
+  <div class="cbar">
+    <a class="chip wa" href="https://wa.me/221789243674" target="_blank">💬 WhatsApp</a>
+    <a class="chip em" href="mailto:sowawa042006@gmail.com">✉️ sowawa042006@gmail.com</a>
+    <span class="chip">⚡ Livraison immédiate</span>
+  </div>
+  <div class="sh"><h3>Cours disponibles</h3><span>6 PDF</span></div>
+  <div class="sgrid">
+    <div class="pcard"><div class="pcov c1">🐍</div><div class="pb"><h4>Python de Zéro à Expert</h4><p>Variables, POO, fichiers et projets pratiques. 120 pages structurées.</p><div class="pf"><div class="pr">9 500 FCFA<small>~14,50 €</small></div><button class="buy" onclick="openModal('Python de Zéro à Expert','9 500 FCFA')">Commander</button></div></div></div>
+    <div class="pcard"><div class="pcov c2">⚡</div><div class="pb"><h4>JavaScript Moderne ES6+</h4><p>Arrow fn, Promises, modules, DOM, fetch API. 95 pages complètes.</p><div class="pf"><div class="pr">8 000 FCFA<small>~12 €</small></div><button class="buy" onclick="openModal('JavaScript Moderne ES6+','8 000 FCFA')">Commander</button></div></div></div>
+    <div class="pcard"><div class="pcov c3">🤖</div><div class="pb"><h4>IA avec Python &amp; LangChain</h4><p>LLMs, RAG, chatbots, API OpenAI. 80 pages pratiques.</p><div class="pf"><div class="pr">12 000 FCFA<small>~18 €</small></div><button class="buy" onclick="openModal('IA avec Python et LangChain','12 000 FCFA')">Commander</button></div></div></div>
+    <div class="pcard"><div class="pcov c4">🐳</div><div class="pb"><h4>DevOps : Docker &amp; CI/CD</h4><p>Conteneurs, Compose, GitHub Actions, déploiement. 75 pages.</p><div class="pf"><div class="pr">10 000 FCFA<small>~15 €</small></div><button class="buy" onclick="openModal('DevOps : Docker et CI/CD','10 000 FCFA')">Commander</button></div></div></div>
+    <div class="pcard"><div class="pcov c5">⚛️</div><div class="pb"><h4>React.js de A à Z</h4><p>Hooks, Context, Router, déploiement Vercel. 100 pages.</p><div class="pf"><div class="pr">10 500 FCFA<small>~16 €</small></div><button class="buy" onclick="openModal('React.js de A à Z','10 500 FCFA')">Commander</button></div></div></div>
+    <div class="pcard"><div class="pcov c6">🗄️</div><div class="pb"><h4>SQL &amp; Bases de Données</h4><p>Requêtes, jointures, PostgreSQL, optimisation. 85 pages.</p><div class="pf"><div class="pr">7 500 FCFA<small>~11,50 €</small></div><button class="buy" onclick="openModal('SQL et Bases de Données','7 500 FCFA')">Commander</button></div></div></div>
+  </div>
+</div>
+</div>
+
+<!-- MODAL -->
+<div class="ov" id="ov" onclick="closeM(event)">
+  <div class="modal">
+    <h3 id="mt">Commander</h3>
+    <p class="mdesc" id="md"></p>
+    <div class="mbtns">
+      <a class="mbtn wa" id="mwa" href="#" target="_blank"><span>💬</span> Contacter via WhatsApp</a>
+      <a class="mbtn em" id="mem" href="#"><span>✉️</span> Envoyer un email</a>
+    </div>
+    <button class="mcl" onclick="document.getElementById('ov').classList.remove('open')">✕ Annuler</button>
+  </div>
+</div>
+
+<footer>© 2025 DevLog — Fait avec passion · <a href="mailto:sowawa042006@gmail.com">sowawa042006@gmail.com</a></footer>
+
+<script>
+// ══ CONTENU DES 6 ARTICLES ══
+var ARTS = [
+  {
+    ey:"JavaScript · Fondamentaux", date:"12 mars 2025", time:"8 min",
+    title:"Maîtriser async/await en JavaScript moderne",
+    intro:"La gestion du code asynchrone est l'une des compétences les plus importantes en JavaScript. Avec async/await, on peut écrire du code asynchrone aussi lisible que du code synchrone.",
+    body:'<h2>1. Pourquoi le code asynchrone ?</h2><p>JavaScript est <strong>mono-thread</strong> : il ne peut exécuter qu\'une chose à la fois. Sans asynchronisme, une requête réseau bloquerait toute l\'interface. L\'asynchronisme permet de lancer une opération longue et de continuer pendant l\'attente.</p><div class="tip"><strong>💡 À retenir</strong>Le code asynchrone garde votre app réactive et fluide pendant les opérations longues.</div><h2>2. Les Promises</h2><div class="cb"><pre><span class="kw">const</span> p = <span class="kw">new</span> Promise((resolve, reject) =&gt; {\n  <span class="kw">if</span> (ok) resolve(<span class="st">"Succès !"</span>);\n  <span class="kw">else</span> reject(<span class="st">"Erreur"</span>);\n});\np.<span class="fn">then</span>(r =&gt; console.<span class="fn">log</span>(r)).<span class="fn">catch</span>(e =&gt; console.<span class="fn">error</span>(e));</pre></div><h2>3. async/await</h2><div class="cb"><pre><span class="kw">async function</span> <span class="fn">getUser</span>(id) {\n  <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(`/api/users/${id}`);\n  <span class="kw">return await</span> res.<span class="fn">json</span>();\n}</pre></div><h2>4. Gestion des erreurs</h2><div class="cb"><pre><span class="kw">async function</span> <span class="fn">fetchData</span>(url) {\n  <span class="kw">try</span> {\n    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(url);\n    <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> Error(`Erreur: ${res.status}`);\n    <span class="kw">return await</span> res.<span class="fn">json</span>();\n  } <span class="kw">catch</span>(e) { console.<span class="fn">error</span>(e); <span class="kw">return null</span>; }\n}</pre></div><h2>5. Requêtes parallèles</h2><div class="cb"><pre><span class="cm">// Lancer plusieurs requêtes en même temps</span>\n<span class="kw">const</span> [user, posts] = <span class="kw">await</span> Promise.<span class="fn">all</span>([<span class="fn">fetchUser</span>(), <span class="fn">fetchPosts</span>()]);</pre></div><div class="warn"><strong>⚠️ Attention</strong>Promise.all() échoue si une seule Promise est rejetée. Utilisez Promise.allSettled() pour continuer malgré les erreurs partielles.</div><div class="sbox"><h4>📋 Ce qu\'il faut retenir</h4><ul><li>Promises = base du code asynchrone moderne</li><li>async/await = syntaxe lisible au-dessus des Promises</li><li>try/catch pour une gestion d\'erreurs propre</li><li>Promise.all() pour paralléliser les requêtes et gagner du temps</li></ul></div>'
+  },
+  {
+    ey:"Python · Intelligence Artificielle", date:"28 mars 2025", time:"8 min",
+    title:"Créer un chatbot avec LangChain et GPT-4",
+    intro:"LangChain est le framework Python incontournable pour construire des applications basées sur les LLMs. On crée ici un chatbot intelligent de A à Z avec mémoire de conversation.",
+    body:'<h2>1. Qu\'est-ce que LangChain ?</h2><p>LangChain simplifie la création d\'apps utilisant des <strong>grands modèles de langage</strong>. Il gère la mémoire, les prompts, et la connexion à des sources de données externes.</p><div class="tip"><strong>💡 Pourquoi l\'utiliser ?</strong>Sans LangChain, gérer mémoire et chaînes d\'actions est très complexe. Avec lui, quelques lignes suffisent.</div><h2>2. Installation</h2><div class="cb"><pre>pip install langchain openai langchain-openai\n<span class="cm"># .env</span>\nOPENAI_API_KEY=sk-votre-cle</pre></div><h2>3. Chatbot de base</h2><div class="cb"><pre><span class="kw">from</span> langchain_openai <span class="kw">import</span> ChatOpenAI\n<span class="kw">from</span> langchain.memory <span class="kw">import</span> ConversationBufferMemory\n<span class="kw">from</span> langchain.chains <span class="kw">import</span> ConversationChain\n\nllm = ChatOpenAI(model=<span class="st">"gpt-4"</span>, temperature=0.7)\nmemory = ConversationBufferMemory()\nbot = ConversationChain(llm=llm, memory=memory)\nprint(bot.predict(input=<span class="st">"Bonjour !"</span>))</pre></div><h2>4. Prompt personnalisé</h2><div class="cb"><pre><span class="kw">from</span> langchain.prompts <span class="kw">import</span> PromptTemplate\ntemplate = <span class="st">"""Tu es DevBot, expert dev. Reponds en francais.\nHistorique: {history}\nHumain: {input}\nDevBot:"""</span>\nprompt = PromptTemplate(input_variables=[<span class="st">"history"</span>,<span class="st">"input"</span>], template=template)\nbot = ConversationChain(llm=llm, memory=memory, prompt=prompt)</pre></div><h2>5. Interface CLI</h2><div class="cb"><pre><span class="kw">while True</span>:\n    txt = input(<span class="st">"Vous : "</span>).strip()\n    <span class="kw">if</span> txt == <span class="st">"quit"</span>: <span class="kw">break</span>\n    print(<span class="st">"Bot :"</span>, bot.predict(input=txt))</pre></div><div class="tip"><strong>💡 Pour aller plus loin</strong>Connectez LangChain à vos PDFs avec ChromaDB pour créer un chatbot basé sur votre propre contenu (RAG).</div><div class="sbox"><h4>📋 Ce qu\'il faut retenir</h4><ul><li>LangChain simplifie les apps LLM</li><li>ConversationBufferMemory gère l\'historique automatiquement</li><li>PromptTemplate personnalise le comportement du bot</li><li>Prochaine étape : RAG avec vos propres documents</li></ul></div>'
+  },
+  {
+    ey:"DevOps · Docker", date:"21 mars 2025", time:"6 min",
+    title:"Docker Compose pour les développeurs solo",
+    intro:"Plus besoin de lancer manuellement une base de données, un Redis et votre API. Avec Docker Compose : un fichier, une commande, tout démarre.",
+    body:'<h2>1. Le problème sans Docker Compose</h2><p>Sans Docker Compose : installer chaque service manuellement, gérer les versions et conflits entre projets. Avec Docker Compose : <code>docker compose up</code> et c\'est tout.</p><h2>2. Le fichier docker-compose.yml</h2><div class="cb"><pre>version: <span class="st">\'3.8\'</span>\nservices:\n  api:\n    build: .\n    ports: [<span class="st">"3000:3000"</span>]\n    environment:\n      - DATABASE_URL=postgresql://user:pass@db:5432/app\n    depends_on: [db, cache]\n    volumes: [.:/app, /app/node_modules]\n  db:\n    image: postgres:15\n    environment: {POSTGRES_USER: user, POSTGRES_PASSWORD: pass, POSTGRES_DB: app}\n    volumes: [pgdata:/var/lib/postgresql/data]\n  cache:\n    image: redis:7-alpine\nvolumes:\n  pgdata:</pre></div><h2>3. Commandes essentielles</h2><div class="cb"><pre>docker compose up           <span class="cm"># Démarrer</span>\ndocker compose up -d        <span class="cm"># En arrière-plan</span>\ndocker compose logs -f api  <span class="cm"># Logs temps réel</span>\ndocker compose down         <span class="cm"># Arrêter</span>\ndocker compose up --build   <span class="cm"># Reconstruire</span></pre></div><h2>4. Dockerfile minimal</h2><div class="cb"><pre>FROM node:20-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\nCOPY . .\nEXPOSE 3000\nCMD ["node", "src/index.js"]</pre></div><div class="warn"><strong>⚠️ Volume node_modules</strong>Montez toujours /app/node_modules en volume pour éviter que le dossier local écrase celui de l\'image Docker.</div><div class="sbox"><h4>📋 Ce qu\'il faut retenir</h4><ul><li>Un fichier YAML pour orchestrer tous vos services</li><li>depends_on assure le bon ordre de démarrage</li><li>Les volumes persistent les données entre redémarrages</li><li>Vos collègues reproduisent l\'environnement en une commande</li></ul></div>'
+  },
+  {
+    ey:"CSS · Mise en page", date:"15 mars 2025", time:"5 min",
+    title:"CSS Grid vs Flexbox : choisir le bon outil",
+    intro:"Flexbox ou Grid ? La réponse est simple une fois qu'on comprend leur philosophie respective : l'un travaille sur une dimension, l'autre sur deux.",
+    body:'<h2>La règle d\'or</h2><p><strong>Flexbox</strong> → 1 dimension (ligne OU colonne)<br><strong>CSS Grid</strong> → 2 dimensions (lignes ET colonnes)</p><div class="tip"><strong>💡 Moyen mnémotechnique</strong>Rangée de boutons → Flexbox. Grille de cartes → Grid. Toujours.</div><h2>Flexbox en pratique</h2><div class="cb"><pre><span class="cm">/* Centrer un élément */</span>\n.box { display: flex; align-items: center; justify-content: center; }\n\n<span class="cm">/* Navbar */</span>\nnav { display: flex; justify-content: space-between; align-items: center; }\n\n<span class="cm">/* Boutons équidistants */</span>\n.btns { display: flex; gap: 1rem; flex-wrap: wrap; }</pre></div><h2>Grid en pratique</h2><div class="cb"><pre><span class="cm">/* Grille responsive */</span>\n.grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));\n  gap: 1.5rem;\n}\n\n<span class="cm">/* Layout de page complet */</span>\n.layout {\n  display: grid;\n  grid-template-areas:\n    "header header"\n    "sidebar main"\n    "footer footer";\n  grid-template-columns: 280px 1fr;\n}</pre></div><h2>La combinaison gagnante</h2><div class="cb"><pre><span class="cm">/* Grid pour la structure, Flexbox dans les composants */</span>\n.page { display: grid; grid-template-columns: 1fr 3fr; }\n.card { display: flex; flex-direction: column; gap: .75rem; }\n.card-footer { display: flex; justify-content: space-between; }</pre></div><div class="sbox"><h4>📋 Ce qu\'il faut retenir</h4><ul><li>Flexbox → 1 direction, composants, alignement simple</li><li>Grid → 2 directions, mises en page complexes</li><li>Combinez-les sans hésiter dans le même projet</li><li>auto-fit + minmax() = la combo Grid la plus utile du quotidien</li></ul></div>'
+  },
+  {
+    ey:"Architecture logicielle", date:"9 mars 2025", time:"10 min",
+    title:"Clean Architecture expliquée simplement",
+    intro:"Derrière les termes techniques se cache une idée simple qui va transformer la façon dont vous structurez vos projets : séparer logique métier et détails techniques.",
+    body:'<h2>Le problème</h2><p>Logique métier mélangée à la BDD et aux routes HTTP = impossible à tester, difficile à maintenir. La Clean Architecture résout ça avec un principe simple : <strong>les détails techniques ne polluent jamais la logique métier.</strong></p><h2>Les 4 couches</h2><div class="cb"><pre><span class="cm">Frameworks and Drivers (HTTP, DB)   &lt;-- extérieur</span>\n<span class="cm">Interface Adapters (Controllers)</span>\n<span class="cm">Application (Use Cases)</span>\n<span class="cm">Entities (Logique métier pure)      &lt;-- coeur</span>\n\n<span class="cm">Règle : les dépendances vont vers l\'intérieur uniquement.</span></pre></div><h2>1. L\'entité (logique pure)</h2><div class="cb"><pre><span class="kw">class</span> User {\n  <span class="fn">constructor</span>(id, email, name) {\n    <span class="kw">if</span> (!email.includes(<span class="st">\'@\'</span>)) <span class="kw">throw new</span> Error(<span class="st">\'Email invalide\'</span>);\n    <span class="kw">this</span>.id=id; <span class="kw">this</span>.email=email; <span class="kw">this</span>.name=name;\n  }\n}</pre></div><h2>2. Le Use Case</h2><div class="cb"><pre><span class="kw">class</span> CreateUser {\n  <span class="fn">constructor</span>(repo) { <span class="kw">this</span>.repo=repo; }\n  <span class="kw">async</span> <span class="fn">execute</span>({email,name}) {\n    <span class="kw">if</span> (<span class="kw">await this</span>.repo.<span class="fn">findByEmail</span>(email)) <span class="kw">throw new</span> Error(<span class="st">\'Deja utilise\'</span>);\n    <span class="kw">return await this</span>.repo.<span class="fn">save</span>(<span class="kw">new</span> User(Date.<span class="fn">now</span>(),email,name));\n  }\n}</pre></div><h2>3. Le Controller</h2><div class="cb"><pre><span class="kw">class</span> UserController {\n  <span class="fn">constructor</span>(uc) { <span class="kw">this</span>.uc=uc; }\n  <span class="kw">async</span> <span class="fn">create</span>(req,res) {\n    <span class="kw">try</span> { res.<span class="fn">status</span>(201).<span class="fn">json</span>(<span class="kw">await this</span>.uc.<span class="fn">execute</span>(req.body)); }\n    <span class="kw">catch</span>(e) { res.<span class="fn">status</span>(400).<span class="fn">json</span>({error:e.message}); }\n  }\n}</pre></div><div class="tip"><strong>💡 Le vrai bénéfice</strong>Testez vos Use Cases sans base de données ni serveur. Changez de framework sans toucher à la logique métier.</div><div class="sbox"><h4>📋 Ce qu\'il faut retenir</h4><ul><li>Séparer logique métier et détails techniques</li><li>Les dépendances pointent toujours vers le centre</li><li>Use Cases testables sans aucune infrastructure</li><li>Code maintenable et indépendant du framework</li></ul></div>'
+  },
+  {
+    ey:"JavaScript · React · Performance", date:"2 mars 2025", time:"7 min",
+    title:"Optimiser React avec le code splitting",
+    intro:"Votre app React se charge trop lentement ? Le code splitting réduit le bundle initial et accélère considérablement l'affichage.",
+    body:'<h2>Le problème</h2><p>Par défaut, tout votre code est regroupé en un fichier. L\'utilisateur télécharge l\'intégralité de l\'app avant de voir quoi que ce soit — même les pages qu\'il ne visitera jamais.</p><div class="warn"><strong>⚠️ Impact réel</strong>Un bundle de 2 MB peut prendre 10 secondes à charger en 3G. Le code splitting peut réduire le bundle initial de 60 à 80%.</div><h2>React.lazy + Suspense</h2><div class="cb"><pre><span class="kw">import</span> { lazy, Suspense } <span class="kw">from</span> <span class="st">\'react\'</span>;\n\n<span class="cm">// Chargé seulement quand la page est visitée</span>\n<span class="kw">const</span> Dashboard = <span class="fn">lazy</span>(() =&gt; <span class="fn">import</span>(<span class="st">\'./pages/Dashboard\'</span>));\n<span class="kw">const</span> Settings = <span class="fn">lazy</span>(() =&gt; <span class="fn">import</span>(<span class="st">\'./pages/Settings\'</span>));\n\n<span class="kw">function</span> <span class="fn">App</span>() {\n  <span class="kw">return</span> (\n    &lt;Suspense fallback={&lt;div&gt;Chargement...&lt;/div&gt;}&gt;\n      &lt;Routes&gt;\n        &lt;Route path=<span class="st">"/"</span> element={&lt;Dashboard /&gt;} /&gt;\n        &lt;Route path=<span class="st">"/settings"</span> element={&lt;Settings /&gt;} /&gt;\n      &lt;/Routes&gt;\n    &lt;/Suspense&gt;\n  );\n}</pre></div><h2>Analyser le bundle avec Vite</h2><div class="cb"><pre>npm install --save-dev rollup-plugin-visualizer\n\n<span class="cm">// vite.config.js</span>\n<span class="kw">import</span> { visualizer } <span class="kw">from</span> <span class="st">\'rollup-plugin-visualizer\'</span>;\n<span class="kw">export default</span> { plugins: [react(), visualizer({open:<span class="kw">true</span>})] };\n\nnpm run build  <span class="cm">// Ouvre automatiquement le rapport</span></pre></div><h2>Préchargement au survol</h2><div class="cb"><pre>&lt;Link to=<span class="st">"/dashboard"</span>\n  onMouseEnter={() =&gt; <span class="fn">import</span>(<span class="st">\'./pages/Dashboard\'</span>)}&gt;\n  Dashboard\n&lt;/Link&gt;</pre></div><div class="tip"><strong>💡 Résultat attendu</strong>Sur un projet moyen, le code splitting par routes réduit le bundle initial de 40 à 70%. Score Lighthouse significativement amélioré.</div><div class="sbox"><h4>📋 Ce qu\'il faut retenir</h4><ul><li>React.lazy() importe un composant de façon différée</li><li>Suspense affiche un fallback pendant le chargement</li><li>Chaque page ne charge que ce dont elle a besoin</li><li>Analysez votre bundle pour identifier les modules lourds</li></ul></div>'
+  },
+  {
+    ey:"Git · Workflow", date:"24 février 2025", time:"6 min",
+    title:"Git Flow vs Trunk-based : lequel choisir ?",
+    intro:"Le choix de votre stratégie de branching impacte votre rythme de déploiement et la santé de votre codebase. Git Flow et Trunk-based représentent deux philosophies très différentes.",
+    body:'<h2>Git Flow : structure et contrôle</h2><p>Git Flow utilise plusieurs branches longues : main, develop, feature/, release/, hotfix/. Très structuré, adapté aux grandes équipes avec des releases planifiées.</p><div class="cb"><pre><span class="cm">main    ----o-----------------o-- (production)</span>\n<span class="cm">             \\               /</span>\n<span class="cm">develop ------o--o--o--o---o  (intégration)</span>\n<span class="cm">                  \\</span>\n<span class="cm">feature -----------o--o (fonctionnalité)</span></pre></div><h2>Trunk-based : simplicité et vélocité</h2><p>Tout le monde intègre dans <code>main</code> plusieurs fois par jour. Branches courtes (max 2 jours), feature flags pour cacher le code non-terminé.</p><div class="cb"><pre><span class="cm">main --o-o-o-o-o-o-o-- (déploiement continu)</span>\n<span class="cm">           \\ /</span>\n<span class="cm">feat  ------o-o (max 1-2 jours)</span></pre></div><h2>Comparaison directe</h2><div class="cb"><pre>                Git Flow     Trunk-based\nEquipe          5-20+ devs   2-15 devs\nDeploiements    1-2/semaine  Plusieurs/jour\nRisque merge    Eleve        Faible\nTests auto      Recommandes  Indispensables</pre></div><div class="tip"><strong>✅ Git Flow si...</strong>Releases planifiées, grande équipe, versioning client, logiciel packagé.</div><div class="tip"><strong>✅ Trunk-based si...</strong>SaaS, déploiement continu, équipe agile, bons tests automatisés.</div><div class="sbox"><h4>📋 La décision en pratique</h4><ul><li>Git Flow = contrôle pour les grosses équipes</li><li>Trunk-based = vélocité pour les équipes agiles</li><li>La plupart des startups SaaS utilisent Trunk-based aujourd\'hui</li><li>Dans les deux cas : tests automatisés non négociables</li></ul></div>'
+  }
+];
+
+function goPage(id) {
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('show');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});
+  document.getElementById('av').style.display='none';
+  document.getElementById('p'+id).classList.add('show');
+  document.getElementById('t'+id[0]).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function showBlog() {
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('show');});
+  document.getElementById('av').style.display='none';
+  document.getElementById('pblog').classList.add('show');
+  document.getElementById('tb').classList.add('on');
+  document.getElementById('ts').classList.remove('on');
+  window.scrollTo(0,0);
+}
+
+function openArt(i) {
+  var a = ARTS[i];
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('show');});
+  var v = document.getElementById('av');
+  v.style.display = 'block';
+  document.getElementById('ab').innerHTML =
+    '<div class="art-ey">'+a.ey+'</div>' +
+    '<h1 class="art-tt">'+a.title+'</h1>' +
+    '<div class="art-mt"><span>✍️ DevLog</span><span>📅 '+a.date+'</span><span>⏱ '+a.time+' de lecture</span></div>' +
+    '<p class="art-in">'+a.intro+'</p>' +
+    '<div class="artb">'+a.body+'</div>';
+  window.scrollTo(0,0);
+}
+
+function fil(cat, btn) {
+  document.querySelectorAll('.f').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var n = 0;
+  document.querySelectorAll('#cg .card').forEach(function(c){
+    var show = cat==='all' || c.dataset.c===cat;
+    c.style.display = show ? '' : 'none';
+    if(show) n++;
+  });
+  document.getElementById('cnt').textContent = n+' article'+(n>1?'s':'');
+}
+
+var WA='221789243674', EM='sowawa042006@gmail.com';
+
+function openModal(name, price) {
+  document.getElementById('mt').textContent = name;
+  document.getElementById('md').textContent = 'Prix : '+price+' — Comment souhaitez-vous nous contacter ?';
+  var msg = encodeURIComponent('Bonjour, je veux commander le PDF : "'+name+'" ('+price+').');
+  document.getElementById('mwa').href = 'https://wa.me/'+WA+'?text='+msg;
+  document.getElementById('mem').href = 'mailto:'+EM+'?subject=Commande : '+name+'&body=Bonjour, je commande "'+name+'" a '+price+'.';
+  document.getElementById('ov').classList.add('open');
+}
+
+function closeM(e) {
+  if(e.target===document.getElementById('ov'))
+    document.getElementById('ov').classList.remove('open');
+}
+
+// Animation cartes
+document.querySelectorAll('.card').forEach(function(c,i){
+  c.style.opacity='0';
+  c.style.transform='translateY(14px)';
+  c.style.transition='opacity .5s '+i*.08+'s ease, transform .5s '+i*.08+'s ease';
+  setTimeout(function(){ c.style.opacity='1'; c.style.transform='translateY(0)'; }, 150);
+});
+</script>
+</body>
+</html>
