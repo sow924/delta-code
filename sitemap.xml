@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://sow924.github.io/delta-code/</loc>
+    <lastmod>2026-04-03T15:28:10Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://sow924.github.io/delta-code/articles/article-1.html</loc>
+    <lastmod>2026-04-01T15:28:10Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sow924.github.io/delta-code/articles/article-2.html</loc>
+    <lastmod>2026-04-01T15:28:10Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Additional URLs can be added here accordingly -->
+</urlset>
