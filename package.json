@@ -1,0 +1,1 @@
+{"name": "delta-code", "version": "1.0.0", "description": "A Node.js project using Puppeteer", "main": "index.js", "scripts": { "test": "echo 'Error: no test specified' && exit 1" }, "dependencies": { "puppeteer": "^10.4.0" }, "author": "sow924", "license": "ISC"}
